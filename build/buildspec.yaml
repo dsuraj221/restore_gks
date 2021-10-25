@@ -1,0 +1,22 @@
+version: 0.2
+phases:
+  build:
+    commands:
+      - aws s3 sync TemplateFiles/ s3://gks-cluster-provisioner-infra-assets/gks-pipeline-restore/
+      - echo "Copy back file from s3"
+      - aws s3 sync s3://$SOURCE_BUCKET_NAME/$SOURCE_FILE ./BackupFolder/
+      - cd BackupFolder && unzip $SOURCE_FILE.zip
+      - ls
+      - cd ..
+      - echo "Start copyin terrafrom file to s3"
+      - aws s3 cp state_bucket_backup s3://$DEST_BUCKET_NAME
+      - echo "terrafrom state file copied  to s3"
+      - echo "Restore DynomoDB"
+      - python3 dynomodb_restore.py
+      - echo "Restored DynomoDB"
+      - echo "Start restoring Cognito Data"
+      - python3 cognito_restore.py
+      - echo "Cognito data restore Completed"
+      - TIME_NOW=$(date +'%Y-%m-%d-%H-%M-%S')
+      - echo $TIME_NOW
+      - echo "Done"
