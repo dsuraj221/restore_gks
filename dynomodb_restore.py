@@ -11,10 +11,10 @@ def load_items(items, db_table_name):
     if not table_config:
         print(f"{db_table_name} Not found")
         return
-    table = dynamodb.create_table(db_table_name,
-                          KeySchema=table_config.get("KeySchema"),
-                          AttributeDefinitions=table_config.get("AttributeDefinitions"),
-                          ProvisionedThroughput=table_config.get("ProvisionedThroughput"))
+    table = dynamodb.create_table(TableName=db_table_name,
+                                  KeySchema=table_config.get("KeySchema"),
+                                  AttributeDefinitions=table_config.get("AttributeDefinitions"),
+                                  ProvisionedThroughput=table_config.get("ProvisionedThroughput"))
     print("Table status:", table.table_status)
     print(table)
     for item in items:
