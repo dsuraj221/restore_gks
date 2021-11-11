@@ -32,9 +32,10 @@ def create_user(users=[]):
 full_path = './BackupFolder/cognito_backup/'
 file_name = "cognito_data.json"
 completePath = os.path.join(full_path, file_name)
-with open(completePath) as json_file:
-    cognito_items = json.load(json_file, parse_float=Decimal)
-    for item in cognito_items:
-        create_groups(item.get('group_name'))
-        create_user(item.get('users'))
+if os.path.exists(completePath):
+    with open(completePath) as json_file:
+        cognito_items = json.load(json_file, parse_float=Decimal)
+        for item in cognito_items:
+            create_groups(item.get('group_name'))
+            create_user(item.get('users'))
 
