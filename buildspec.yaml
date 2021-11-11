@@ -13,6 +13,7 @@ phases:
       - echo "Start copyin terrafrom file to s3"
       - aws s3 sync state_bucket_backup s3://$S3_BUCKET/$TARGET_BUCKET_NAME
       - echo "terrafrom state file copied  to s3"
+      - cd ..
       - echo "Restore DynomoDB"
       - python3 dynomodb_restore.py
       - echo "Restored DynomoDB"
