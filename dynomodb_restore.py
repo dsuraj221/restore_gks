@@ -4,19 +4,23 @@ import json
 import boto3
 from table_schemas import config
 
+dynamodb = boto3.resource("dynamodb")
+table_names = [table.name for table in dynamodb.tables.all()]
+
+
 def load_items(items, db_table_name):
-    dynamodb = boto3.resource("dynamodb")
     print(db_table_name)
-    table_config = config.get(db_table_name)
-    if not table_config:
-        print(f"{db_table_name} Not found")
-        return
-    table = dynamodb.create_table(TableName=db_table_name,
-                                  KeySchema=table_config.get("KeySchema"),
-                                  AttributeDefinitions=table_config.get("AttributeDefinitions"),
-                                  ProvisionedThroughput=table_config.get("ProvisionedThroughput"))
+    table = dynamodb.Table(db_table_name)
+    if db_table_name in table_names:
+        table_config = config.get(db_table_name)
+        if not table_config:
+            print(f"{db_table_name} Not found")
+            return
+        table = dynamodb.create_table(TableName=db_table_name,
+                                      KeySchema=table_config.get("KeySchema"),
+                                      AttributeDefinitions=table_config.get("AttributeDefinitions"),
+                                      ProvisionedThroughput=table_config.get("ProvisionedThroughput"))
     print("Table status:", table.table_status)
-    print(table)
     for item in items:
         table.put_item(Item=item)
 
