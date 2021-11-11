@@ -83,6 +83,8 @@ Resources:
       Parameters: 
         DestinationBucketName:
           Ref: DestinationBucketName
+        S3Bucket:
+          Ref: S3Bucket
         SourceBucketName:
           Ref: SourceBucketName
         SourceFile:
