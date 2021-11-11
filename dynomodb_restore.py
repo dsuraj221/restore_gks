@@ -11,6 +11,7 @@ table_names = [table.name for table in dynamodb.tables.all()]
 def load_items(items, db_table_name):
     print(db_table_name)
     table = dynamodb.Table(db_table_name)
+    print(table_names)
     if db_table_name in table_names:
         table_config = config.get(db_table_name)
         if not table_config:
