@@ -4,8 +4,7 @@ phases:
     commands:
       - echo "downloading templates"
       - echo "Copy backup file from s3"
-      - aws s3 sync s3://$S3_BUCKET/$SOURCE_BUCKET_NAME/$SOURCE_FILE ./BackupFolder/
-      - cd ./BackupFolder
+      - aws s3 sync s3://$S3_BUCKET/$SOURCE_BUCKET_NAME/$SOURCE_FILE .
       - ls
       - unzip $SOURCE_FILE.zip
       - ls
