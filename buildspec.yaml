@@ -5,7 +5,7 @@ phases:
       - echo "downloading templates"
       - echo "Copy backup file from s3"
       - echo "s3://$S3_BUCKET/$SOURCE_BUCKET_NAME/$SOURCE_FILE"
-      - aws s3 sync s3://gks-cluster-provisioner-infra-assets/backup-assets-dev/2021-10-06-12-03-25.zip .
+      - aws s3 cp s3://gks-cluster-provisioner-infra-assets/backup-assets-dev/2021-10-06-12-03-25.zip ./$SOURCE_FILE
       - ls
       - unzip $SOURCE_FILE
       - ls
