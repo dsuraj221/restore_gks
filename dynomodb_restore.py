@@ -6,7 +6,9 @@ import boto3
 
 def load_items(items, db_table_name):
     dynamodb = boto3.resource("dynamodb")
+    print(db_table_name)
     table = dynamodb.Table(db_table_name)
+    print(table)
     for item in items:
         table.put_item(Item=item)
 
