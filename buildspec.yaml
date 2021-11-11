@@ -4,12 +4,12 @@ phases:
     commands:
       - echo "downloading templates"
       - echo "Copy backup file from s3"
-      - aws s3 sync s3://$SOURCE_BUCKET_NAME/$SOURCE_FILE ./BackupFolder/
+      - aws s3 sync s3://$S3_BUCKET/$SOURCE_BUCKET_NAME/$SOURCE_FILE ./BackupFolder/
       - cd BackupFolder && unzip $SOURCE_FILE.zip
       - ls
       - cd ..
       - echo "Start copyin terrafrom file to s3"
-      - aws s3 cp state_bucket_backup s3://$TARGET_BUCKET_NAME
+      - aws s3 cp state_bucket_backup s3://$S3_BUCKET/$TARGET_BUCKET_NAME
       - echo "terrafrom state file copied  to s3"
       - echo "Restore DynomoDB"
       - python3 dynomodb_restore.py
