@@ -6,7 +6,7 @@ phases:
       - echo "Copy backup file from s3"
       - aws s3 sync s3://$S3_BUCKET/$SOURCE_BUCKET_NAME/$SOURCE_FILE .
       - ls
-      - unzip $SOURCE_FILE.zip
+      - unzip $SOURCE_FILE
       - ls
       - cd ..
       - echo "Start copyin terrafrom file to s3"
