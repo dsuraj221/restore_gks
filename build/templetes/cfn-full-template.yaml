@@ -4,18 +4,23 @@ Parameters:
   SourceBucketName:
     Description: Enter Source bucket name which stores back-up
     Type: String
-  SOURCE_FILE:
+    Default: backup-assets-dev
+  SourceFile:
     Description: Enter Source bucket directory name which stores back-up
     Type: String
-  USER_POOL_ID:
+    Default: 2021-10-06-12-03-25.zip
+  UserPoolID:
     Description: Enter user pool id to create cognito user
     Type: String
-  TEMP_PASSWORD:
+    Default: eu-west-1:9a586590-bbea-4de2-934f-04071974d6ea
+  TempPassword:
     Description: Enter user temporary password to create cognito user
     Type: String
+    Default: temp@221
   DestinationBucketName:
     Description: Enter Destination bucket name which stores terrafrom
     Type: String
+    Default: restore-state
   SourceGihubRepoUrl:
     Description: Enter Github Repo url that contains build script and build files
     Type: String
@@ -23,9 +28,10 @@ Parameters:
   TemplatePath:
     Type: String
     Description: Path to CloudFormation templates (relative to top level of S3Bucket parameter)
-    Default: /gks-pipeline-backup/
+    Default: /gks-pipeline-restore/
   S3Bucket:
-    Type: String  
+    Type: String
+    Default: gks-cluster-provisioner-infra-assets
   Environment:
     Type: String
     AllowedValues: 
@@ -79,12 +85,12 @@ Resources:
           Ref: DestinationBucketName
         SourceBucketName:
           Ref: SourceBucketName
-        SOURCE_FILE:
-          Ref: SOURCE_FILE
-        USER_POOL_ID:
-          Ref: USER_POOL_ID
-        TEMP_PASSWORD:
-          Ref: TEMP_PASSWORD
+        SourceFile:
+          Ref: SourceFile
+        UserPoolID:
+          Ref: UserPoolID
+        TempPassword:
+          Ref: TempPassword
         #SourceGihubRepoUrl:
         #  Ref: SourceGihubRepoUrl   
         Environment:
@@ -124,8 +130,14 @@ Resources:
       Timeout: 20
       MemorySize: 128
       Code:
-        S3Bucket: !Ref LambdaCodeBucketName
-        S3Key: !Ref LambdaZipFileName
+        ZipFile: !Sub |
+          import boto3
+          import os
+
+          def handler(event, context):
+              client = boto3.client("codepipeline")
+              response = client.start_pipeline_execution(name=os.getenv("BACKUP_PIPELINE_NAME"))
+              print(f"CodePipeline Response : {response}")
       Environment:
         Variables:
           PROJECT_NAME: !GetAtt "CodeBuildProject.Outputs.BackupPipelineBuild"

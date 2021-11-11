@@ -5,11 +5,11 @@ Parameters:
     Type: String
   DestinationBucketName:    
     Type: String
-  SOURCE_FILE:
+  SourceFile:
     Type: String
-  USER_POOL_ID:
+  UserPoolID:
     Type: String
-  TEMP_PASSWORD:
+  TempPassword:
     Type: String
   Environment:
     Type: String      
@@ -81,11 +81,11 @@ Resources:
           - Name: TARGET_BUCKET_NAME
             Value: !Ref DestinationBucketName
           - Name: SOURCE_FILE
-            Value: !Ref SOURCE_FILE
+            Value: !Ref SourceFile
           - Name: USER_POOL_ID
-            Value: !Ref USER_POOL_ID
+            Value: !Ref UserPoolID
           - Name: TEMP_PASSWORD
-            Value: !Ref TEMP_PASSWORD
+            Value: !Ref TempPassword
       TimeoutInMinutes: 15  
 Outputs:
   BackupPipelineBuild:
