@@ -2,7 +2,8 @@ version: 0.2
 phases:
   build:
     commands:
-      - aws s3 sync TemplateFiles/ s3://gks-cluster-provisioner-infra-assets/gks-pipeline-restore/
+      - echo "downloading templates"
+      - aws s3 sync templates/ s3://gks-cluster-provisioner-infra-assets/gks-pipeline-restore/
       - echo "Copy backup file from s3"
       - aws s3 sync s3://$SOURCE_BUCKET_NAME/$SOURCE_FILE ./BackupFolder/
       - cd BackupFolder && unzip $SOURCE_FILE.zip

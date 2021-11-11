@@ -33,10 +33,10 @@ Resources:
                 Version: 1
               Configuration:
                 Owner: "dsuraj221"
-                Repo: "build"
+                Repo: "restore_gks"
                 Branch: "master"
                 PollForSourceChanges: false
-                OAuthToken: "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"
+                OAuthToken: "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"
               OutputArtifacts:
               - Name: SourceCodeApp
               RunOrder: 1
