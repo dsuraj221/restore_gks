@@ -36,7 +36,7 @@ Resources:
                 Repo: "restore_gks"
                 Branch: "master"
                 PollForSourceChanges: false
-                OAuthToken: "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"
+                OAuthToken: "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"
               OutputArtifacts:
               - Name: SourceCodeApp
               RunOrder: 1
