@@ -12,7 +12,7 @@ def load_items(items, db_table_name):
     print(db_table_name)
     table = dynamodb.Table(db_table_name)
     print(table_names)
-    if db_table_name in table_names:
+    if db_table_name not in table_names:
         table_config = config.get(db_table_name)
         if not table_config:
             print(f"{db_table_name} Not found")

@@ -8,7 +8,6 @@ phases:
       - aws s3 cp s3://$S3_BUCKET/$SOURCE_BUCKET_NAME/$SOURCE_FILE ./BackupFolder/$SOURCE_FILE
       - cd ./BackupFolder
       - unzip $SOURCE_FILE
-      - ls
       - echo "s3://$S3_BUCKET/$TARGET_BUCKET_NAME"
       - echo "Start copyin terrafrom file to s3"
       - aws s3 sync state_bucket_backup s3://$S3_BUCKET/$TARGET_BUCKET_NAME
