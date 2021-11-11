@@ -17,7 +17,7 @@ def pick_json_files(db_file, db_table_name):
     load_items(items, db_table_name)
 
 
-directory = '/BackupFolder/dynamodb_backup'
+directory = './BackupFolder/dynamodb_backup'
 for filename in os.listdir(directory):
     f = os.path.join(directory, filename)
     table_name = filename.split('.')[0]
