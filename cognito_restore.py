@@ -9,24 +9,30 @@ temp_password = os.environ["TEMP_PASSWORD"]
 
 
 def create_groups(grp):
-    response = client.create_group(
-        GroupName=grp,
-        UserPoolId=user_pool_id
-    )
-    print(response)
+    try:
+        response = client.create_group(
+            GroupName=grp,
+            UserPoolId=user_pool_id
+        )
+        print(response)
+    except client.exceptions.GroupExistsException as e:
+        print(e)
 
 
 def create_user(users=[]):
     for user in users:
-        response = client.admin_create_user(
-            UserPoolId=user_pool_id,
-            Username=user.get('Username'),
-            UserAttributes=user.get('Attributes'),
-            TemporaryPassword=temp_password,
-            ForceAliasCreation=True if user.get('UserStatus') == 'CONFIRMED' else False,
-            DesiredDeliveryMediums=['EMAIL']
-        )
-        print(response)
+        try:
+            response = client.admin_create_user(
+                UserPoolId=user_pool_id,
+                Username=user.get('Username'),
+                UserAttributes=user.get('Attributes'),
+                TemporaryPassword=temp_password,
+                ForceAliasCreation=True if user.get('UserStatus') == 'CONFIRMED' else False,
+                DesiredDeliveryMediums=['EMAIL']
+            )
+            print(response)
+        except client.exceptions.UsernameExistsException as e:
+            print(e)
 
 
 full_path = './BackupFolder/cognito_backup/'
