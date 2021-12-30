@@ -5,7 +5,7 @@ phases:
       - echo "downloading templates"
       - echo "Copy backup file from s3"
       - echo "s3://$S3_BUCKET/$SOURCE_BUCKET_NAME/$SOURCE_FILE"
-      - aws s3 cp s3://$S3_BUCKET/$SOURCE_BUCKET_NAME/$SOURCE_FILE ./BackupFolder/$SOURCE_FILE
+      - aws s3 cp s3://$SOURCE_BUCKET_NAME/$SOURCE_FILE ./BackupFolder/$SOURCE_FILE
       - cd ./BackupFolder
       - unzip $SOURCE_FILE
       - echo "s3://$S3_BUCKET/$TARGET_BUCKET_NAME"
